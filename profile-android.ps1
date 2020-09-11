@@ -93,7 +93,8 @@ if (-not $adb)
 {
     $adb = 'C:\Program Files (x86)\Android\android-sdk\platform-tools\adb.exe'
     if (-not (Test-Path $adb))
-    {
+    {   
+        Write-Host "doesnt exist adb"
         # adb should be in $PATH on macOS
         $adb = 'adb'
     }
@@ -103,6 +104,7 @@ if (-not $emulator)
     $emulator = 'C:\Program Files (x86)\Android\android-sdk\emulator\emulator.exe'
     if (-not (Test-Path $emulator))
     {
+        Write-Host "doesnt exist emulator"
         # emulator should be in $PATH on macOS
         $emulator = 'emulator'
     }
