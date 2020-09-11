@@ -2,7 +2,6 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HelloWorld.MainPage">
-
     <StackLayout>
         <Frame BackgroundColor="#2196F3" Padding="24" CornerRadius="0">
             <Label Text="Welcome to Xamarin.Forms!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36"/>
@@ -19,6 +18,6 @@
                 </FormattedString>
             </Label.FormattedText>
         </Label>
+        <Label x:Name="lblXamlc" FontSize="16" Padding="30,0,30,0"/>
     </StackLayout>
-
 </ContentPage>

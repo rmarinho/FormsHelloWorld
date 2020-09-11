@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
 namespace HelloWorld
 {
@@ -13,6 +7,12 @@ namespace HelloWorld
 		public MainPage()
 		{
 			InitializeComponent();
+#if _XAMLC_
+			lblXamlc.Text = "USING XAMLC";
+#else
+			lblXamlc.Text = "NOT USING XAMLC";
+#endif
+
 		}
 	}
 }
