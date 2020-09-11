@@ -8,7 +8,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macos-latest'
+  vmImage: 'windows-latest'
 
 variables:
   buildConfiguration: 'Release'
@@ -18,4 +18,4 @@ steps:
 - task: PowerShell@2
   inputs:
     filePath: 'profile-android.ps1'
-    arguments: '-configuration Release -extra /p:USE_XAMLC=true'
+    arguments: '-configuration $(buildConfiguration) -extra /p:USE_XAMLC=true'

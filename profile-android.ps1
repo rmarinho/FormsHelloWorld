@@ -122,8 +122,8 @@ if (-not $project)
 }
 
 $devices = & $adb devices
-
 $noDevices = [string]::IsNullOrWhiteSpace(($devices -replace "List of Devices attached",""))
+
 if ($noDevices)
 {
     Write-Host "Doesn't have Devices"
