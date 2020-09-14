@@ -1,0 +1,5 @@
+<Project>
+  <PropertyGroup>
+    <XamarinFormsVersion Condition="'$(XamarinFormsVersion)' == ''">4.7.0.1351</XamarinFormsVersion>
+  </PropertyGroup>
+</Project>

@@ -11,13 +11,7 @@
     <DefineConstants>TRACE;</DefineConstants>
   </PropertyGroup>
   <PropertyGroup>
-    <!-- default locally to using fast renderers but if we're running on CI don't set a value for ANDROID_RENDERERS.
-      This will let the old and new yaml configurations coexist -->
     <USE_XAMLC Condition="'$(USE_XAMLC)' == ''">true</USE_XAMLC>
     <DefineConstants Condition="'$(USE_XAMLC)' == 'true'">$(DefineConstants);_XAMLC_</DefineConstants>
   </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1239" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
-  </ItemGroup>
 </Project>
