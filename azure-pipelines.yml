@@ -15,6 +15,7 @@ variables:
 
 steps:
 - task: PowerShell@2
+  displayName: "run startup time benchmark"
   inputs:
     filePath: 'profile-android.ps1'
     arguments: '-configuration $(buildConfiguration) -extra /p:USE_XAMLC=true'
