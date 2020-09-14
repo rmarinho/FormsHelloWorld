@@ -8,7 +8,8 @@ trigger:
 - master
 
 pool:
-  vmImage: 'macOS-latest'
+  name: $(PoolName)
+  vmImage: $(PoolImage)
 
 variables:
   outputDirectory: '$(build.binariesDirectory)/$(buildConfiguration)'
@@ -18,4 +19,4 @@ steps:
   displayName: "run startup time benchmark"
   inputs:
     filePath: 'profile-android.ps1'
-    arguments: '-configuration $(buildConfiguration) -extra /p:USE_XAMLC=$(UseXamlc) -androidapi $(AndroidApi)'
+    arguments: '-configuration $(BuildConfiguration) -extra /p:USE_XAMLC=$(UseXamlc) -androidapi $(AndroidApi)'
