@@ -18,4 +18,4 @@ steps:
   displayName: "run startup time benchmark"
   inputs:
     filePath: 'profile-android.ps1'
-    arguments: '-configuration $(buildConfiguration) -extra /p:USE_XAMLC=$(UseXamlc) -androidapi $(androidapi)'
+    arguments: '-configuration $(buildConfiguration) -extra /p:USE_XAMLC=$(UseXamlc) -androidapi $(AndroidApi)'
