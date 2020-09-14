@@ -93,7 +93,7 @@ if (-not $adb)
 {
     $adb = 'C:\Program Files (x86)\Android\android-sdk\platform-tools\adb.exe'
     if (-not (Test-Path $adb))
-    {   
+    {
         Write-Host "doesnt exist adb"
         # adb should be in $PATH on macOS
         $adb = 'adb'
@@ -104,9 +104,13 @@ if (-not $emulator)
     $emulator = 'C:\Program Files (x86)\Android\android-sdk\emulator\emulator.exe'
     if (-not (Test-Path $emulator))
     {
-        Write-Host "doesnt exist emulator"
+        Write-Host "We don't have emulator"
         # emulator should be in $PATH on macOS
-        $emulator = 'emulator'
+        if($IsMacOS)
+        {
+            Write-Host "We are running macos"
+            $emulator = $null
+        }
     }
 }
 if (-not $msbuild)
@@ -129,23 +133,36 @@ $noDevices = [string]::IsNullOrWhiteSpace(($devices -replace "List of Devices at
 if ($noDevices)
 {
     Write-Host "Doesn't have Devices"
-    Write-Host "Listing emulators"
-    & $emulator -list-avds  
-    $emulators = & $emulator -list-avds 
-    $emulatorsArray =$emulators.Split(" ")
-    Write-Host "number of emulators" $emulatorsArray.length
-    if($emulatorsArray.length -gt 0)
+    if ($emulator)
     {
-        $index = 5
-        $emulatorToRun = $emulatorsArray[ $index]
-        Write-Host "Starting emulator $index from list - $emulatorToRun "
-        Start-Process -FilePath $emulator -ArgumentList "-avd $emulatorToRun"
-        # Start-Job -ScriptBlock {
-        #     & $emulator -avd $emulatorToRun 
-        # }
+        Write-Host "Listing emulators"
+        & $emulator -list-avds
+        $emulators = & $emulator -list-avds
+        $emulatorsArray =$emulators.Split(" ")
+        Write-Host "number of emulators" $emulatorsArray.length
+        if($emulatorsArray.length -gt 0)
+        {
+            $index = 5
+            $emulatorToRun = $emulatorsArray[ $index]
+            Write-Host "Starting emulator $index from list - $emulatorToRun "
+            Start-Process -FilePath $emulator -ArgumentList "-avd $emulatorToRun"
+            # Start-Job -ScriptBlock {
+            #     & $emulator -avd $emulatorToRun
+            # }
+        }
+        else {
+            Write-Host "no emulators found"
+
+        }
     }
     else {
-        Write-Host "no emulators found"
+        # Start-Process -FilePath $
+        #  -ArgumentList "-avd $emulatorToRun"
+        if($IsMacOS)
+        {
+            Write-Host "start emulator.sh"
+            Start-Process -FilePath emulator.sh
+        }
     }
 }
 else {
