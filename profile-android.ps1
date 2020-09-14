@@ -47,6 +47,10 @@ but you may need to increase for larger apps.
 
 The number of times to launch the app for profiling. Defaults to 10.
 
+.PARAMETER androidapi
+
+The android api to use when creating the emulator
+
 .EXAMPLE
 
 PS> profile-android.ps1
@@ -69,7 +73,7 @@ This would launch a different app with 3 iterations.
 
 .EXAMPLE
 
-PS> profile-android.ps1 -configuration Release -extra /p:AotAssemblies=True
+PS> profile-android.ps1 -configuration Release -extra /p:AotAssemblies=True -androidapi android-28
 
 This would test the app using a Release build and AOT.
 #>
@@ -82,6 +86,7 @@ param
     [string] $package = 'com.microsoft.helloworld',
     [string] $configuration = 'Debug',
     [string] $extra,
+    [string] $androidapi = 'android-28',
     [int] $sleep = 3,
     [int] $iterations = 10
 )
@@ -146,13 +151,12 @@ if ($noDevices)
             $emulatorToRun = $emulatorsArray[ $index]
             Write-Host "Starting emulator $index from list - $emulatorToRun "
             Start-Process -FilePath $emulator -ArgumentList "-avd $emulatorToRun"
-            # Start-Job -ScriptBlock {
-            #     & $emulator -avd $emulatorToRun
-            # }
+            Start-Job -ScriptBlock {
+                & $emulator -avd $emulatorToRun
+            }
         }
         else {
             Write-Host "no emulators found"
-
         }
     }
     else {
@@ -161,7 +165,7 @@ if ($noDevices)
         if($IsMacOS)
         {
             Write-Host "start emulator.sh"
-            Start-Process -FilePath emulator.sh
+            Start-Process -FilePath emulator.sh $androidapi
         }
     }
 }
