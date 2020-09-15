@@ -86,7 +86,7 @@ param
     [string] $adb,
     [string] $msbuild,
     [string] $project,
-    [string] $package = 'com.microsoft.helloworld',
+    [string] $package,
     [string] $configuration = 'Debug',
     [string] $extra,
     [string] $xamarinformsversion = '4.7.0.1351',
@@ -131,10 +131,10 @@ if (-not $msbuild)
         $msbuild = 'msbuild'
     }
 }
-if (-not $project)
-{
-    $project = Join-Path -Path $PSScriptRoot -ChildPath "HelloWorld\HelloWorld.Android\HelloWorld.Android.csproj"
-}
+# if (-not $project)
+# {
+#     $project = Join-Path -Path $PSScriptRoot -ChildPath "HelloWorld\HelloWorld.Android\HelloWorld.Android.csproj"
+# }
 
 $devices = & $adb devices
 $noDevices = [string]::IsNullOrWhiteSpace(($devices -replace "List of Devices attached",""))
@@ -175,16 +175,32 @@ else {
     & $adb devices
 }
 
+$flutter = $project -eq ""
 #We need a large logcat buffer
 & $adb logcat -G 15M
 & $adb logcat -c
-& $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration /p:XamarinFormsVersion=$xamarinformsversion $extra
+
+if(-not $flutter)
+{
+    & $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration /p:XamarinFormsVersion=$xamarinformsversion $extra
+}
+else {
+    
+    Write-Host "Building flutter: $package"
+}
 
 for ($i = 1; $i -le $iterations; $i++)
 {
     Write-Host "Launching: $package"
     & $adb shell am force-stop $package
-    & $msbuild $project /v:minimal /nologo /t:_Run /p:Configuration=$configuration
+    if($flutter)
+    {
+        & $adb shell am start -n "$package/$package.MainActivity"
+    }
+    else
+    {
+        & $msbuild $project /v:minimal /nologo /t:_Run /p:Configuration=$configuration
+    }
     Start-Sleep -Seconds $sleep
 }
 
