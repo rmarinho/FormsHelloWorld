@@ -177,39 +177,33 @@ else {
 }
 
 $isFlutter = -not $project.EndsWith("csproj")
+
 #We need a large logcat buffer
-& $adb logcat -G 15M
+& $adb logcat -G 30M
 & $adb logcat -c
 
 if(-not $isFlutter)
 {
     & $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration /p:XamarinFormsVersion=$xamarinformsversion $extra
 }
-else 
+else
 {
     Set-Location $project
     Write-Host "Building flutter: $package"
     & $flutter build apk --release
-    & $flutter install 
+    & $flutter install
 }
 
 for ($i = 1; $i -le $iterations; $i++)
 {
     Write-Host "Launching: $package"
     & $adb shell am force-stop $package
-    if($isFlutter)
-    {
-        & $adb shell am start -n "$package/$package.MainActivity"
-    }
-    else
-    {
-        & $msbuild $project /v:minimal /nologo /t:_Run /p:Configuration=$configuration
-    }
+    & $adb shell am start -n "$package/$package.MainActivity"
     Start-Sleep -Seconds $sleep
 }
 
 # Log message of the form:
-# 12-12 09:08:36.974  1876  1898 I ActivityManager: Displayed com.xamarin.forms.helloforms/crc6450e568c951913723.MainActivity: +1s540ms
+# 12-12 09:08:36.974  1876  1898 I ActivityManager: Displayed com.mycompany.myapp/crc6450e568c951913723.MainActivity: +1s540ms
 
 $log = & $adb logcat -d | Select-String -Pattern 'Activity.*Manager.+Displayed'
 if ($log.Count -eq 0)
