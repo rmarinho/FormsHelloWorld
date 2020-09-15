@@ -16,7 +16,13 @@ variables:
 
 steps:
 - task: PowerShell@2
-  displayName: "run startup time benchmark"
+  displayName: "Benchmark startup Xamarin Forms $(XamarinFormsVersion)"
   inputs:
     filePath: 'profile-android.ps1'
     arguments: "-configuration $(BuildConfiguration) -extra /p:USE_XAMLC=$(UseXamlc) -xamarinformsversion $(XamarinFormsVersion) -androidapi $(AndroidApi)"
+
+- task: PowerShell@2
+  displayName: "Benchmark startup Xamarin Android"
+  inputs:
+    filePath: 'profile-android.ps1'
+    arguments: "-project HelloAndroid/HelloAndroid/HelloAndroid.csproj -package com.microsoft.helloandroid -configuration $(BuildConfiguration)"

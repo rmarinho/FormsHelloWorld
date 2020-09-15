@@ -13,8 +13,9 @@ namespace HelloWorld
 #else
 			lblXamlc.Text = "NOT USING XAMLC";
 #endif
-			AssemblyDescriptionAttribute attribute = Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyDescriptionAttribute)) as AssemblyDescriptionAttribute;
-			btnXamarinForms.Text = attribute.Description;
+
+			var attribute = typeof(Label).Assembly.GetCustomAttribute(typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;
+			btnXamarinForms.Text = attribute.InformationalVersion;
 		}
 	}
 }
