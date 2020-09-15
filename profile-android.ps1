@@ -185,12 +185,13 @@ if(-not $isFlutter)
 {
     & $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration /p:XamarinFormsVersion=$xamarinformsversion $extra
 }
-else 
+else
 {
     Set-Location $project
     Write-Host "Building flutter: $package"
+    & 'echo $PATH'
     & $flutter build apk --release
-    & $flutter install 
+    & $flutter install
 }
 
 for ($i = 1; $i -le $iterations; $i++)
