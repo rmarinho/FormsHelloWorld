@@ -52,11 +52,13 @@
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:paddingTop="24dp"
+        android:paddingBottom="24dp"
         android:textSize="16dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:padding="10dp"
         android:text="Xamarin.Android Version"/>
 </LinearLayout>

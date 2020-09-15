@@ -8,7 +8,7 @@
         </Frame>
         <Label Text="Start developing now" FontSize="Title" Padding="30,10,30,10"/>
         <Label Text="Make changes to your XAML file and save to see your UI update in the running app with XAML Hot Reload. Give it a try!" FontSize="16" Padding="30,0,30,0"/>
-        <Label FontSize="16" Padding="30,24,30,0">
+        <Label FontSize="16" Padding="30,24,30,24">
             <Label.FormattedText>
                 <FormattedString>
                     <FormattedString.Spans>
@@ -18,7 +18,7 @@
                 </FormattedString>
             </Label.FormattedText>
         </Label>
-        <Label x:Name="lblXamlc" FontSize="16" Padding="30,0,30,0"/>
-        <Button x:Name="btnXamarinForms" FontSize="16" Padding="30,0,30,0" HorizontalOptions="Center"/>
+        <Label x:Name="lblXamlc" FontSize="16" Padding="30,24,30,24"/>
+        <Button x:Name="btnXamarinForms" FontSize="16" Padding="10" HorizontalOptions="Center"/>
     </StackLayout>
 </ContentPage>
