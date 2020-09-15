@@ -131,10 +131,11 @@ if (-not $msbuild)
         $msbuild = 'msbuild'
     }
 }
-# if (-not $project)
-# {
-#     $project = Join-Path -Path $PSScriptRoot -ChildPath "HelloWorld\HelloWorld.Android\HelloWorld.Android.csproj"
-# }
+if (-not $flutter)
+{
+    # msbuild should be in $PATH
+    $flutter = 'flutter'
+}
 
 $devices = & $adb devices
 $noDevices = [string]::IsNullOrWhiteSpace(($devices -replace "List of Devices attached",""))
@@ -175,25 +176,28 @@ else {
     & $adb devices
 }
 
-$flutter = $project -eq ""
+$isFlutter = -not $project.EndsWith("csproj")
 #We need a large logcat buffer
 & $adb logcat -G 15M
 & $adb logcat -c
 
-if(-not $flutter)
+if(-not $isFlutter)
 {
     & $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration /p:XamarinFormsVersion=$xamarinformsversion $extra
 }
-else {
-    
+else 
+{
+    Set-Location $project
     Write-Host "Building flutter: $package"
+    & $flutter build apk --release
+    & $flutter install 
 }
 
 for ($i = 1; $i -le $iterations; $i++)
 {
     Write-Host "Launching: $package"
     & $adb shell am force-stop $package
-    if($flutter)
+    if($isFlutter)
     {
         & $adb shell am start -n "$package/$package.MainActivity"
     }

@@ -20,3 +20,9 @@ steps:
   inputs:
     filePath: 'profile-android.ps1'
     arguments: "-project HelloAndroid/HelloAndroid/HelloAndroid.csproj -package com.microsoft.helloandroid -configuration $(BuildConfiguration)"
+
+- task: PowerShell@2
+  displayName: "Benchmark startup Flutter"
+  inputs:
+    filePath: 'profile-android.ps1'
+    arguments: "-project helloflutter -package com.microsoft.helloflutter -configuration $(BuildConfiguration)"
