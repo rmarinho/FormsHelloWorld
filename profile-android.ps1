@@ -98,6 +98,21 @@ param
 Function Get-Devices{
     Param ($emulators, $androidapi)
 
+    if (-not $emulator)
+    {
+        $emulator = 'C:\Program Files (x86)\Android\android-sdk\emulator\emulator.exe'
+        if (-not (Test-Path $emulator))
+        {
+            Write-Host "We don't have emulator"
+            # emulator should be in $PATH on macOS
+            if($IsMacOS)
+            {
+                Write-Host "We are running macos"
+                $emulator = $null
+            }
+        }
+    }
+
     $devices = & $adb devices
     $noDevices = [string]::IsNullOrWhiteSpace(($devices -replace "List of Devices attached",""))
 
@@ -136,6 +151,38 @@ Function Get-Devices{
     }
 }
 
+Function Build-App{
+    Param ($project, $package)
+
+    if (-not $msbuild)
+    {
+        $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe'
+        if (-not (Test-Path $msbuild))
+        {
+            # msbuild should be in $PATH on macOS
+            $msbuild = 'msbuild'
+        }
+    }
+    if (-not $flutter)
+    {
+        # flutter should be in $PATH
+        $flutter = 'flutter'
+    }
+
+    $isFlutter = -not $project.EndsWith("csproj")
+    if(-not $isFlutter)
+    {
+        & $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration /p:XamarinFormsVersion=$xamarinformsversion $extra
+    }
+    else
+    {
+        Set-Location $project
+        Write-Host "Building flutter: $package"
+        & $flutter build apk --release
+        & $flutter install
+    }
+}
+
 $ErrorActionPreference = 'Stop'
 
 # Input validation
@@ -149,55 +196,16 @@ if (-not $adb)
         $adb = 'adb'
     }
 }
-if (-not $emulator)
-{
-    $emulator = 'C:\Program Files (x86)\Android\android-sdk\emulator\emulator.exe'
-    if (-not (Test-Path $emulator))
-    {
-        Write-Host "We don't have emulator"
-        # emulator should be in $PATH on macOS
-        if($IsMacOS)
-        {
-            Write-Host "We are running macos"
-            $emulator = $null
-        }
-    }
-}
-if (-not $msbuild)
-{
-    $msbuild = 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\MSBuild\Current\Bin\MSBuild.exe'
-    if (-not (Test-Path $msbuild))
-    {
-        # msbuild should be in $PATH on macOS
-        $msbuild = 'msbuild'
-    }
-}
-if (-not $flutter)
-{
-    # flutter should be in $PATH
-    $flutter = 'flutter'
-}
 
 #Check if we have devices, or start a emulator
 Get-Devices $emulator $androidapi
 
-$isFlutter = -not $project.EndsWith("csproj")
+#Build App
+Build-App $project $package
 
 #We need a large logcat buffer
 & $adb logcat -G 30M
 & $adb logcat -c
-
-if(-not $isFlutter)
-{
-    & $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration /p:XamarinFormsVersion=$xamarinformsversion $extra
-}
-else
-{
-    Set-Location $project
-    Write-Host "Building flutter: $package"
-    & $flutter build apk --release
-    & $flutter install
-}
 
 for ($i = 1; $i -le $iterations; $i++)
 {
