@@ -95,6 +95,47 @@ param
     [int] $iterations = 10
 )
 
+Function Get-Devices{
+    Param ($emulators, $androidapi)
+
+    $devices = & $adb devices
+    $noDevices = [string]::IsNullOrWhiteSpace(($devices -replace "List of Devices attached",""))
+
+    if ($noDevices)
+    {
+        Write-Host "No devices found"
+        if ($emulator)
+        {
+            Write-Host "Listing emulators"
+            & $emulator -list-avds
+            $emulators = & $emulator -list-avds
+            $emulatorsArray =$emulators.Split(" ")
+            Write-Host "number of emulators" $emulatorsArray.length
+            if($emulatorsArray.length -gt 0)
+            {
+                $index = 0
+                $emulatorToRun = $emulatorsArray[ $index]
+                Write-Host "Starting emulator $index from list - $emulatorToRun "
+                Start-Process -FilePath $emulator -ArgumentList "-avd $emulatorToRun"
+                Start-Job -ScriptBlock {
+                    & $emulator -avd $emulatorToRun
+                }
+            }
+            else {
+                Write-Host "no emulators found"
+            }
+        }
+        elseif ($IsMacOS)
+        {
+            Write-Host "start emulator.sh"
+            Start-Process -FilePath emulator.sh $androidapi
+        }
+    }
+    else {
+        & $adb devices
+    }
+}
+
 $ErrorActionPreference = 'Stop'
 
 # Input validation
@@ -133,48 +174,12 @@ if (-not $msbuild)
 }
 if (-not $flutter)
 {
-    # msbuild should be in $PATH
+    # flutter should be in $PATH
     $flutter = 'flutter'
 }
 
-$devices = & $adb devices
-$noDevices = [string]::IsNullOrWhiteSpace(($devices -replace "List of Devices attached",""))
-
-if ($noDevices)
-{
-    Write-Host "Doesn't have Devices"
-    if ($emulator)
-    {
-        Write-Host "Listing emulators"
-        & $emulator -list-avds
-        $emulators = & $emulator -list-avds
-        $emulatorsArray =$emulators.Split(" ")
-        Write-Host "number of emulators" $emulatorsArray.length
-        if($emulatorsArray.length -gt 0)
-        {
-            $index = 5
-            $emulatorToRun = $emulatorsArray[ $index]
-            Write-Host "Starting emulator $index from list - $emulatorToRun "
-            Start-Process -FilePath $emulator -ArgumentList "-avd $emulatorToRun"
-            Start-Job -ScriptBlock {
-                & $emulator -avd $emulatorToRun
-            }
-        }
-        else {
-            Write-Host "no emulators found"
-        }
-    }
-    else {
-        if($IsMacOS)
-        {
-            Write-Host "start emulator.sh"
-            Start-Process -FilePath emulator.sh $androidapi
-        }
-    }
-}
-else {
-    & $adb devices
-}
+#Check if we have devices, or start a emulator
+Get-Devices $emulator $androidapi
 
 $isFlutter = -not $project.EndsWith("csproj")
 
@@ -198,7 +203,8 @@ for ($i = 1; $i -le $iterations; $i++)
 {
     Write-Host "Launching: $package"
     & $adb shell am force-stop $package
-    & $adb shell am start -n "$package/$package.MainActivity"
+    & $adb shell monkey -p $package 1
+   # & $adb shell am start -n "$package/$package.MainActivity"
     Start-Sleep -Seconds $sleep
 }
 
