@@ -38,6 +38,9 @@ The $(Configuration) MSBuild property. Defaults to 'Debug'.
 Additional command-line arguments to pass to MSBuild. For example,
 '-extra /p:AotAssemblies=True' would enable AOT.
 
+.PARAMETER xamarinformsversion
+The Xamarin.Forms version to run hello world on
+
 .PARAMETER sleep
 
 The number of seconds to wait between each app launch. Defaults to 3,
@@ -86,6 +89,7 @@ param
     [string] $package = 'com.microsoft.helloworld',
     [string] $configuration = 'Debug',
     [string] $extra,
+    [string] $xamarinformsversion = '4.7.0.1351',
     [string] $androidapi = 'android-28',
     [int] $sleep = 3,
     [int] $iterations = 10
@@ -160,8 +164,6 @@ if ($noDevices)
         }
     }
     else {
-        # Start-Process -FilePath $
-        #  -ArgumentList "-avd $emulatorToRun"
         if($IsMacOS)
         {
             Write-Host "start emulator.sh"
@@ -176,7 +178,7 @@ else {
 #We need a large logcat buffer
 & $adb logcat -G 15M
 & $adb logcat -c
-& $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration $extra
+& $msbuild $project /v:minimal /nologo /restore /t:Clean,Install /p:Configuration=$configuration /p:XamarinFormsVersion=$xamarinformsversion $extra
 
 for ($i = 1; $i -le $iterations; $i++)
 {

@@ -19,5 +19,6 @@
             </Label.FormattedText>
         </Label>
         <Label x:Name="lblXamlc" FontSize="16" Padding="30,0,30,0"/>
+        <Button x:Name="btnXamarinForms" FontSize="16" Padding="30,0,30,0" HorizontalOptions="Center"/>
     </StackLayout>
 </ContentPage>

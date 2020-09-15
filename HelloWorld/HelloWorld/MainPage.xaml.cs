@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System.Reflection;
+using Xamarin.Forms;
 
 namespace HelloWorld
 {
@@ -12,7 +13,8 @@ namespace HelloWorld
 #else
 			lblXamlc.Text = "NOT USING XAMLC";
 #endif
-
+			AssemblyDescriptionAttribute attribute = Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyDescriptionAttribute)) as AssemblyDescriptionAttribute;
+			btnXamarinForms.Text = attribute.Description;
 		}
 	}
 }
