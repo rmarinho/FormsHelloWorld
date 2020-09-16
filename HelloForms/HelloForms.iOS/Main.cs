@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace HelloWorld.iOS
+namespace HelloForms.iOS
 {
     public class Application
     {

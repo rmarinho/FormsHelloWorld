@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace HelloWorld
+namespace HelloForms
 {
 	public partial class App : Application
 	{

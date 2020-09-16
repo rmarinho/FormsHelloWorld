@@ -13,7 +13,7 @@ steps:
   displayName: "Benchmark startup Xamarin Forms $(XamarinFormsVersion)"
   inputs:
     filePath: 'profile-android.ps1'
-    arguments: "-project HelloWorld/HelloWorld.Android/HelloWorld.Android.csproj -package com.microsoft.helloworld -configuration $(BuildConfiguration) -extra /p:USE_XAMLC=$(UseXamlc) -xamarinformsversion $(XamarinFormsVersion) -androidapi $(AndroidApi)"
+    arguments: "-project HelloForms/HelloForms.Android/HelloForms.Android.csproj -package com.microsoft.helloforms -configuration $(BuildConfiguration) -extra /p:USE_XAMLC=$(UseXamlc) -xamarinformsversion $(XamarinFormsVersion) -androidapi $(AndroidApi)"
 
 - task: PowerShell@2
   displayName: "Benchmark startup Xamarin Android"

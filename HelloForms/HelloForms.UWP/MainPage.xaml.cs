@@ -13,7 +13,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace HelloWorld.UWP
+namespace HelloForms.UWP
 {
     public sealed partial class MainPage
     {
@@ -21,7 +21,7 @@ namespace HelloWorld.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new HelloWorld.App());
+            LoadApplication(new HelloForms.App());
         }
     }
 }
