@@ -7,8 +7,8 @@
     <ProjectGuid>{FF58921F-9DFB-4B0C-9007-B244A03C5D68}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HelloWorld.UWP</RootNamespace>
-    <AssemblyName>HelloWorld.UWP</AssemblyName>
+    <RootNamespace>HelloForms.UWP</RootNamespace>
+    <AssemblyName>HelloForms.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.19559.0</TargetPlatformVersion>
