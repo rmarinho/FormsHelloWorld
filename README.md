@@ -13,7 +13,7 @@ Running Flutter project
 
 Current results 
 
-|  Platform | Samsung SM-G950F  | Pixel 2  |
+|  Platform | Samsung SM-G950F  | Google Pixel 2  |
 |   :---    |   :-:|---|
 |  Flutter | 470.8 | 256.7  |
 |  Xamarin Android | 547.5| 322.4  |
