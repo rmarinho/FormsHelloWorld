@@ -85,6 +85,7 @@ param
 (
     [string] $adb,
     [string] $msbuild,
+    [string] $dotnet,
     [string] $project,
     [string] $package,
     [string] $configuration = 'Debug',
@@ -183,6 +184,18 @@ Function Build-App{
     }
 }
 
+Function Build-dotnet-App{
+    Param ($project, $package)
+
+    if (-not $dotnet)
+    {
+        $dotnet = 'dotnet'
+    }
+   
+    & $dotnet restore $project
+    & $dotnet build $project /t:Clean,Install /p:Configuration=$configuration $extra
+}
+
 $ErrorActionPreference = 'Stop'
 
 # Input validation
@@ -200,8 +213,16 @@ if (-not $adb)
 #Check if we have devices, or start a emulator
 Get-Devices $emulator $androidapi
 
-#Build App
-Build-App $project $package
+if (-not $dotnet)
+{
+    #Build App
+    Build-App $project $package
+}
+else
+{
+    #Build App
+    Build-dotnet-App $project $package
+}
 
 #We need a large logcat buffer
 & $adb logcat -G 30M
