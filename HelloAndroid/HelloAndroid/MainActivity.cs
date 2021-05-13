@@ -1,13 +1,9 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Graphics;
 using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
 using Android.Support.V7.App;
 using Android.Text;
 using Android.Text.Style;
-using Android.Views;
 using Android.Widget;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,7 +20,8 @@ namespace HelloAndroid
 			base.OnCreate(savedInstanceState);
 			SetContentView(Resource.Layout.activity_main);
 #if __BUILDER__
-			UseBuilder();
+			UseBuilder(false);
+			UseDI();
 #else
 			UseDefault();
 #endif
@@ -36,17 +33,29 @@ namespace HelloAndroid
 			SetText(textService.GetText());
 		}
 
-		void UseBuilder()
+		void UseBuilder(bool useDefault)
 		{
-			var builder = Host.CreateDefaultBuilder();
-			builder.ConfigureServices(collection =>
+			IHostBuilder builder;
+			if(useDefault)
 			{
-				collection.AddSingleton<ITextService, TextService>();
-				collection.AddSingleton<IHostLifetime, CustomHostLifetime>();
-			});
+				builder = Host.CreateDefaultBuilder();
+			}
+			else
+			{
+				builder = new HostBuilder().UseContentRoot(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
+			}
+			
+			builder.ConfigureServices(collection => collection.AddSingleton<IHostLifetime, CustomHostLifetime>());
 			var host = builder.Build();
 			host.Start();
-			var textService = host.Services.GetRequiredService<ITextService>();
+		}
+
+		private void UseDI()
+		{
+			var collection = new ServiceCollection();
+			collection.AddSingleton<ITextService, TextService>();
+			var serviceProvider = collection.BuildServiceProvider();
+			var textService = serviceProvider.GetRequiredService<ITextService>();
 			SetText($"From Builder {textService.GetText()}");
 		}
 
