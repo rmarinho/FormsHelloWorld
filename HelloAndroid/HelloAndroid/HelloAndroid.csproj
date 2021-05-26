@@ -72,8 +72,11 @@
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(USE_BUILDER)' == ''">
     <AndroidAotProfile Include="$(MSBuildThisFileDirectory)custom.aprof" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(USE_BUILDER)' == 'true'">
+    <AndroidAotProfile Include="$(MSBuildThisFileDirectory)custom_builder.aprof" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
