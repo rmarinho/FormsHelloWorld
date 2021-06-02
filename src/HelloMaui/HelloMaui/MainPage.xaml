@@ -3,8 +3,8 @@
              x:Class="HelloMaui.MainPage">
 
     <StackLayout>
-        <VerticalStackLayout BackgroundColor="#2196F3">
-            <Label Text="Welcome to MAUI!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" HorizontalOptions="CenterAndExpand"/>
+        <VerticalStackLayout BackgroundColor="#512BD4">
+            <Label Text="Welcome to MAUI!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" HorizontalOptions="CenterAndExpand" Padding="24"/>
         </VerticalStackLayout>
         <Label Text="Start developing now" FontSize="Title" Padding="30,10,30,10"/>
         <Label Text="Make changes to your XAML file and save to see your UI update in the running app with XAML Hot Reload. Give it a try!" FontSize="16" Padding="30,0,30,0"/>
