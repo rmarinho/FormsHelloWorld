@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="HelloMaui.MainPage">
+
+    <StackLayout>
+        <VerticalStackLayout BackgroundColor="#2196F3">
+            <Label Text="Welcome to MAUI!" HorizontalTextAlignment="Center" TextColor="White" FontSize="36" HorizontalOptions="CenterAndExpand"/>
+        </VerticalStackLayout>
+        <Label Text="Start developing now" FontSize="Title" Padding="30,10,30,10"/>
+        <Label Text="Make changes to your XAML file and save to see your UI update in the running app with XAML Hot Reload. Give it a try!" FontSize="16" Padding="30,0,30,0"/>
+        <Label FontSize="16" Padding="30,24,30,24">
+            <Label.Text>
+                Learn more a https://github.com/dotnet/maui
+            </Label.Text> 
+            <!--<Label.FormattedText>
+                <FormattedString>
+                    <FormattedString.Spans>
+                        <Span Text="Learn more at "/>
+                        <Span Text="https://github.com/dotnet/maui" FontAttributes="Bold"/>
+                    </FormattedString.Spans>
+                </FormattedString>
+            </Label.FormattedText>-->
+        </Label>
+        <Label x:Name="lblXamlc" FontSize="16" Padding="30,24,30,24"/>
+        <Button x:Name="btnXamarinForms" FontSize="16" Padding="10" HorizontalOptions="Center"/>
+    </StackLayout>
+</ContentPage>
