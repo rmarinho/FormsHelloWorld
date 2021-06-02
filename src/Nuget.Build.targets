@@ -1,0 +1,11 @@
+<Project>
+  
+  <ItemGroup Condition="'$(UseForms)' == 'true'">
+    <PackageReference Include="Xamarin.Forms" Version="$(XamarinFormsVersion)"/>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(UseMaui)' == 'true'">
+		<PackageReference Include="Microsoft.Maui" Version="$(MauiVersion)" />
+  </ItemGroup>
+
+</Project>

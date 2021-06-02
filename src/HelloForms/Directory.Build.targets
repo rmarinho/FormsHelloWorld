@@ -1,5 +1,5 @@
 <Project>
   
-  <Import Project="Nuget.Build.targets" Condition="'$(XamarinFormsVersion)' != ''" />
+  <Import Project="../Nuget.Build.targets" Condition="'$(XamarinFormsVersion)' != ''" />
 
 </Project>
