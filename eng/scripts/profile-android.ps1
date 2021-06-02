@@ -92,6 +92,7 @@ param
     [string] $extra,
     [string] $xamarinformsversion = '4.7.0.1351',
     [string] $androidapi = 'android-28',
+    [string] $targets = 'Clean,Install',
     [int] $sleep = 3,
     [int] $iterations = 10
 )
@@ -185,15 +186,16 @@ Function Build-App{
 }
 
 Function Build-dotnet-App{
-    Param ($project, $package)
+    Param ($project, $package, $targets = 'Clean,Install')
 
     if (-not $dotnet)
     {
         $dotnet = 'dotnet'
     }
    
-    & $dotnet restore $project
-    & $dotnet build $project /t:Clean,Install /p:Configuration=$configuration $extra
+    # & $dotnet restore $project
+    Write-Host "$dotnet build $project /t:$targets /p:Configuration=$configuration $extra"
+    & $dotnet build $project /t:$targets /p:Configuration=$configuration $extra -f net6.0-android
 }
 
 $ErrorActionPreference = 'Stop'
@@ -221,7 +223,7 @@ if (-not $dotnet)
 else
 {
     #Build App
-    Build-dotnet-App $project $package
+    Build-dotnet-App $project $package $targets
 }
 
 #We need a large logcat buffer
