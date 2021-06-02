@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Reflection;
 
 namespace HelloAndroid
 {
@@ -25,6 +26,13 @@ namespace HelloAndroid
 #else
 			UseDefault();
 #endif
+			SetButtonVersion();
+		}
+		void SetButtonVersion()
+		{
+			Button button1 = FindViewById<Button>(Resource.Id.button1);
+			var attribute = typeof(Button).Assembly.GetCustomAttribute(typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;
+			button1.Text = attribute.InformationalVersion;
 		}
 
 		void UseDefault()
@@ -50,7 +58,7 @@ namespace HelloAndroid
 			host.Start();
 		}
 
-		private void UseDI()
+		void UseDI()
 		{
 			var collection = new ServiceCollection();
 			collection.AddSingleton<ITextService, TextService>();
@@ -79,8 +87,6 @@ namespace HelloAndroid
 
 		public class CustomHostLifetime : IHostLifetime
 		{
-			public string GetText() => "Learn more at https://aka.ms/xamarin-quickstart";
-
 			public Task StopAsync(CancellationToken cancellationToken)
 			{
 				return Task.Run(() => { });

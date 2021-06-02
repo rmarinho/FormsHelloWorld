@@ -1,6 +1,5 @@
 <Project>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="$(XamarinFormsVersion)">
-    </PackageReference>
+    <PackageReference Include="Xamarin.Forms" Version="$(XamarinFormsVersion)"/>
   </ItemGroup>
 </Project>

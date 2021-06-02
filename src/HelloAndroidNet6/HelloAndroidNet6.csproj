@@ -1,14 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net6.0-android</TargetFramework>
     <OutputType>Exe</OutputType>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Resources\values\colors.xml" />
-    <None Remove="Resources\values\styles.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0-preview.3.21201.4" />
+    <PackageReference Include="Xamarin.Google.Android.Material" Version="1.3.0.1-net6preview03.4680155" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Update="Resources\values\colors.xml">

@@ -7,6 +7,7 @@ using Android.Text.Style;
 using Android.Widget;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,9 +25,18 @@ namespace HelloAndroidNet6
 
 #if __BUILDER__
 			UseBuilder();
+			UseDI();
 #else
 			UseDefault();
 #endif
+			SetButtonVersion();
+		}
+
+		void SetButtonVersion()
+		{
+			Button button1 = FindViewById<Button>(Resource.Id.button1);
+			var attribute = typeof(Button).Assembly.GetCustomAttribute(typeof(AssemblyInformationalVersionAttribute)) as AssemblyInformationalVersionAttribute;
+			button1.Text = attribute.InformationalVersion;
 		}
 
 		void UseDefault()
@@ -35,17 +45,29 @@ namespace HelloAndroidNet6
 			SetText(textService.GetText());
 		}
 
-		void UseBuilder()
+		void UseBuilder(bool useDefault)
 		{
-			var builder = Host.CreateDefaultBuilder();
-			builder.ConfigureServices(collection =>
+			IHostBuilder builder;
+			if (useDefault)
 			{
-				collection.AddSingleton<ITextService, TextService>();
-				collection.AddSingleton<IHostLifetime, CustomHostLifetime>();
-			});
+				builder = Host.CreateDefaultBuilder();
+			}
+			else
+			{
+				builder = new HostBuilder().UseContentRoot(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal));
+			}
+
+			builder.ConfigureServices(collection => collection.AddSingleton<IHostLifetime, CustomHostLifetime>());
 			var host = builder.Build();
 			host.Start();
-			var textService = host.Services.GetRequiredService<ITextService>();
+		}
+
+		void UseDI()
+		{
+			var collection = new ServiceCollection();
+			collection.AddSingleton<ITextService, TextService>();
+			var serviceProvider = collection.BuildServiceProvider();
+			var textService = serviceProvider.GetRequiredService<ITextService>();
 			SetText($"From Builder {textService.GetText()}");
 		}
 
