@@ -44,4 +44,3 @@ Current results
 |   :---:  |   :---------:    |   :--------:   | :----: |
 | ![Screenshot_20201022-153233](https://user-images.githubusercontent.com/1235097/96887216-49b48680-147c-11eb-9230-1d0040cea50f.png)   | ![Screenshot_20201022-152758](https://user-images.githubusercontent.com/1235097/96887259-53d68500-147c-11eb-9ce8-d8fe410a06ef.png) | ![Screenshot_20201022-152956](https://user-images.githubusercontent.com/1235097/96887308-60f37400-147c-11eb-9f98-0aedd29e9c80.png)
  | ![Screenshot_1622661946](https://user-images.githubusercontent.com/1235097/120541352-afd59480-c3e1-11eb-94bb-f4cdf4c8b376.png)
- | 
