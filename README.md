@@ -35,9 +35,11 @@ Current results
 |  Xamarin Forms (4.8.0.1364) AOT (Custom profile)| * |  492 ms |
 |  Xamarin Forms (4.8.0.1364) AOT XAMLC | * | 468.4 ms |
 |  Xamarin Forms (4.8.0.1364) AOT XAMLC (Custom profile) | *  | 452 ms |
-|  .NET6 (preview3) Android | | 344.4 ms |
-|  .NET6 (preview4) Android | | 339.4 ms |
-|  .NET6 MAUI App (preview4) XAMLC | | 1091.2 ms |
+|  .NET6 Android (Preview3) | | 344.4 ms |
+|  .NET6 Android (Preview4) | | 339.4 ms |
+|  .NET6 Android (Preview5) | | 378.1 ms |
+|  .NET6 MAUI App (6.0.0-Preview.4.634) XAMLC | | 1091.2 ms |
+|  .NET6 MAUI App (6.0.0-Preview.5.798) XAMLC | | 1232.3 ms |
 
 
 |  Flutter | Xamarin.Android  | Xamarin.Forms  |  MAUI |
