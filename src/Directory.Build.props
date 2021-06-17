@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
     <XamarinFormsVersion Condition="'$(XamarinFormsVersion)' == ''">4.7.0.1351</XamarinFormsVersion>
-    <MauiVersion Condition="'$(MauiVersion)' == ''">6.0.100-preview.4.*</MauiVersion>
+    <MauiVersion Condition="'$(MauiVersion)' == ''">6.0.100-preview.5.*</MauiVersion>
   </PropertyGroup>
 </Project>

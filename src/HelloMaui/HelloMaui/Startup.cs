@@ -1,6 +1,7 @@
 ﻿using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls.Hosting;
 
 namespace HelloMaui
 {
@@ -8,9 +9,9 @@ namespace HelloMaui
 	{
 		public void Configure(IAppHostBuilder appBuilder)
 		{
-			appBuilder
-				.UseFormsCompatibility()
-				.UseMauiApp<App>();
+			//Uncomment for Preview4
+			//appBuilder.UseFormsCompatibility();
+			appBuilder.UseMauiApp<App>();
 				//.ConfigureFonts(fonts =>
 				//{
 				//	fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
