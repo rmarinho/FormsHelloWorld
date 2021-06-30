@@ -35,6 +35,10 @@ Current results
 |  Xamarin Forms (4.8.0.1364) AOT (Custom profile)| * |  492 ms |
 |  Xamarin Forms (4.8.0.1364) AOT XAMLC | * | 468.4 ms |
 |  Xamarin Forms (4.8.0.1364) AOT XAMLC (Custom profile) | *  | 452 ms |
+|  Xamarin Forms (5.0.0.2012) | *  | 1060 ms |
+|  Xamarin Forms (5.0.0.2012) XAMLC | *  | 886 ms |
+|  Xamarin Forms (5.0.0.2012) AOT XAMLC | *  | 470 ms |
+|  Xamarin Forms (5.0.0.2012) AOT XAMLC (Custom profile) | *  | 455 ms |
 |  .NET6 Android (Preview3) | | 344.4 ms |
 |  .NET6 Android (Preview4) | | 339.4 ms |
 |  .NET6 Android (Preview5) | | 378.1 ms |
